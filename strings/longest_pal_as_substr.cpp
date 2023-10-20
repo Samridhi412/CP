@@ -11,6 +11,13 @@ const ll minf=-inf;
 #define mp make_pair
 #define pb push_back
 #define endl "\n"
+int findSubstr(int lps[],int longestlen, int n){
+	int count=0;
+	for(int i=0;i<n;i++){
+		if(lps[i]==longestlen)count++;
+	}
+	return count;
+}
 void manacher(string& s){
 	int n=s.size();
 	n=2*n+1;
@@ -18,10 +25,7 @@ void manacher(string& s){
 	memset(lps,0,sizeof(lps));
 	lps[0]=0;
 	lps[1]=1;
-	int start=-1;
-	int end=-1;
 	int lonpallen=0;
-	int totalpal=0;
 	int imirror=-1;
 	int c=1;
 	int r=2;
@@ -38,19 +42,11 @@ void manacher(string& s){
 		c=i;
 		r=i+lps[i];
 	}
-	int start=(i-lps[i])/2;
-	int end=start+lps[i]-1;
-	int len=end-start+1;
-	if(i&1){
-		totalpal += (lps[i]+1)/2;
-	}else{
-		totalpal += lps[i]/2;
-	}
-	if(len>lonpallen){
-		lonpallen=len;
+	if(lps[i]>lonpallen){
+		lonpallen=lps[i];
 	}
   }
-	cout<<totalpal + 1<<endl;
+	cout<<lonpallen<<" "<<findSubstr(lps,lonpallen,n)<<endl;
 }
 void solve(){
 	string str;
@@ -61,6 +57,11 @@ int main(){
 	ios_base :: sync_with_stdio(false);
 	cin.tie(NULL);
 	cout.tie(NULL);
-	solve();
+	int test;
+	cin>>test;
+	for(int i=0;i<test;i++){
+		solve();
+	}
 	return 0;
 }
+/*******************USE THIS MANACHER IF N>1***************/
